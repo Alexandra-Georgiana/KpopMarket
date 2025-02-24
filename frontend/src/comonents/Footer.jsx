@@ -50,14 +50,15 @@ const Footer = () => {
         <div className="flex-1 min-w-[200px]">
           <FooterColumn title={SOCIALS.title}>
             <div className="flex gap-4 justify-center md:justify-start">
-              {SOCIALS.links.map((icon, index) => (
-                <a href="/" key={index} className="hover:opacity-80">
-                  <img src={icon} alt="social icon" className="w-6 h-6" />
+              {SOCIALS.links.map((item, index) => (
+                <a href={item.url} key={index} className="hover:opacity-80" target="_blank" rel="noopener noreferrer">
+                  <img src={item.icon} alt="social icon" className="w-6 h-6" />
                 </a>
               ))}
             </div>
           </FooterColumn>
         </div>
+
 
       </div>
 

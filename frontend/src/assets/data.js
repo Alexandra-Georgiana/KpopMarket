@@ -114,13 +114,14 @@ export const FOOTER_CONTACT_INFO = {
 };
 
 // **SOCIAL LINKS**
+
 export const SOCIALS = {
-  title: "Social",
+  title: "Follow Us",
   links: [
-    facebook,
-    instagram,
-    twitter,
-    youtube,
-    linkedin,
+    { url: "https://www.facebook.com", icon: facebook },
+    { url: "https://www.instagram.com", icon: instagram },
+    { url: "https://www.twitter.com", icon: twitter },
+    { url: "https://www.youtube.com", icon: youtube },
+    { url: "https://www.linkedin.com", icon: linkedin },
   ],
 };

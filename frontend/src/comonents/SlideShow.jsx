@@ -5,13 +5,13 @@ import Promo from "../assets/Promo.mp4";
 import Soon from "../assets/Soon.mp4";
 
 const IMAGES = [
-    { type: "image", src: NewWeek },
+    { type: "image", src: NewWeek, action: "scrollToNewThisWeek" },
     { type: "video", src: Promo },
     { type: "video", src: Soon },
     { type: "image", src: GiveAway }
 ];
 
-const SlideShow = () => {
+const SlideShow = ({ scrollToNewThisWeek }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
@@ -29,7 +29,7 @@ const SlideShow = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             nextSlide();
-        }, 5000); // Auto-switch every 5 seconds
+        }, 5000); // Auto-play every 5 seconds
         return () => clearInterval(interval);
     }, []);
 
@@ -41,10 +41,17 @@ const SlideShow = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + IMAGES.length) % IMAGES.length);
     };
 
+    const handleClick = () => {
+        if (IMAGES[currentIndex].action === "scrollToNewThisWeek") {
+            scrollToNewThisWeek();
+        }
+    };
+
     return (
         <div className="relative w-full h-full">
             <div
                 className={`w-full h-[${windowHeight}px] flex items-center justify-center bg-black transition-all duration-300`}
+                onClick={handleClick} // Make image itself a button
             >
                 {IMAGES[currentIndex].type === "video" ? (
                     <video
