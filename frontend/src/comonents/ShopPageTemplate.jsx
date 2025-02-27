@@ -40,7 +40,7 @@ const ShopPageTemplate = ({ items, title }) => {
   return (
       <div className="pt-20 px-4 flex">
         {filteredItems.length > 0 && (
-          <div className="w-1/4 p-4 bg-pink-100 rounded-lg shadow-md">
+          <div className="w-[230px] p-4 bg-pink-100 rounded-lg shadow-md">
               <div className="fixed">
               <h2 className="text-xl font-semibold mb-4">Filter & Sort</h2>
                 {/* Price Range */}

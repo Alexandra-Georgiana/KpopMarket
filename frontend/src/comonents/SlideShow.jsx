@@ -75,13 +75,13 @@ const SlideShow = ({ scrollToNewThisWeek }) => {
 
             {/* Navigation Buttons */}
             <button
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-300"
+                className="absolute top-0 left-0 transform w-10 h-full bg-[#65656760] p-2 text-white shadow-md hover:bg-gray-300"
                 onClick={prevSlide}
             >
                 ◀
             </button>
             <button
-                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-300"
+                className="absolute top-0 right-0 transform w-10 h-full bg-[#65656760] p-2 text-white shadow-md hover:bg-gray-300"
                 onClick={nextSlide}
             >
                 ▶

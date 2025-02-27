@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Heather from "./comonents/Heather";
 import Home from "./pages/Home";
@@ -17,10 +17,21 @@ import Trending from "./pages/PopularPg";
 import SearchResults from "./comonents/SearchResults";
 import NotFound from "./pages/NotFound";
 import Checkout from "./pages/Checkout";
+import ProfilePg from "./pages/ProfilePg";
+import { auth } from "./firebase/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 
 export default function App() {
   const [showSticker, setShowSticker] = useState(false);
+  const [user, setUser] = useState();
+
+    //If loged in redirect to accont page
+    useEffect(() => {
+        auth.onAuthStateChanged(user=>{
+            setUser(user);
+        })
+    })
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +53,7 @@ export default function App() {
       <img
         src={Love}
         alt="Love"
-        className={`fixed bottom-0 right-0 w-[500px] h-[600px] z-[9999] drop-shadow-2xl transition-all duration-700 ${
+        className={`fixed bottom-0 right-0 w-[300px] h-[400px] z-[9999] drop-shadow-2xl transition-all duration-700 ${
           showSticker ? "translate-y-0 opacity-100" : "translate-y-[100px] opacity-0"
         }`}
       />
@@ -60,10 +71,11 @@ export default function App() {
           <Route path="/search" element={<SearchResults />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart-pg" element={<Cart />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={user ? <Navigate to = "/profile"/> : <Signup />} />
+          <Route path="/login" element={user ? <Navigate to = "/profile"/> : <Login />} />
           <Route path="/not_found" element={<NotFound />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/profile" element={<ProfilePg />} />
         </Routes>
         <Footer />
       </BrowserRouter>

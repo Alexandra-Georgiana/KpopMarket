@@ -21,38 +21,36 @@ import linkedin from './linkedin.svg';
 export const POPULAR = [
   {
     id: 1,
-    name: "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
+    name: "print_1",
     image: p1_img,
-    new_price: 50.00,
-    old_price: 80.50,
+    new_price: "$15.00",
+    old_price: "$20.00",	
   },
   {
     id: 2,
-    name: "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
+    name: "print_4",
     image: p2_img,
-    new_price: 85.00,
-    old_price: 120.50,
+    new_price: "$6.00",
   },
   {
     id: 3,
-    name: "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
+    name: "totebag_1",
     image: p3_img,
-    new_price: 60.00,
-    old_price: 100.50,
+    new_price: "$15.00",
+    old_price: "$20.00",
   },
   {
     id: 4,
-    name: "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
+    name: "sticker_3",
     image: p4_img,
-    new_price: 100.00,
-    old_price: 150.00,
+    new_price: "$5.00",
+    old_price: "$10.00",
   },
   {
     id: 5,
-    name: "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
+    name: "keychain_3",
     image: p5_img,
-    new_price: 100.00,
-    old_price: 150.00,
+    new_price: "$5.00"
   },
 ];
 
@@ -68,17 +66,16 @@ export const LATEST = [
   },
   {
     id: 7,
-    name: "Boys Orange Colourblocked Hooded Sweatshirt",
+    name: "print_7",
     image: p7_img,
-    new_price: 85.0,
-    old_price: 120.5,
+    new_price: "$15.00"
   },
   {
     id: 8,
-    name: "Men Green Solid Zippered Full-Zip Slim Fit Bomber Jacket",
+    name: "keychain_1",
     image: p8_img,
-    new_price: 60.0,
-    old_price: 100.5,
+    new_price: "$5.00", 
+    old_price: "$10.00"
   },
 ];
 export default POPULAR;

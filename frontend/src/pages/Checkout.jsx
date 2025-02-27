@@ -5,30 +5,21 @@ import PlacedOrd from '../assets/PlacedOrd.png';
 
 const Checkout = () => {
     const { cartItems } = useCart();
-    const [orderPlaced, setOrderPlaced] = useState(false); // Order confirmation state
+    const [orderPlaced, setOrderPlaced] = useState(false);
 
-
-    // Default shipping cost
     const [shippingCost, setShippingCost] = useState(0);
-
-    // Calculate total price
     const totalItemsPrice = cartItems.reduce((total, item) => {
-        const itemPrice = parseFloat(item.new_price.slice(1)); // Parse price
-        if (isNaN(itemPrice)) return total; // Skip invalid price
-        return total + itemPrice * item.quantity;
+        const itemPrice = parseFloat(item.new_price.slice(1));
+        return isNaN(itemPrice) ? total : total + itemPrice * item.quantity;
     }, 0);
-
-    // Overall total including shipping
     const overallTotal = totalItemsPrice + shippingCost;
 
     const [address, setAddress] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        street: '',
-        city: '',
-        postalCode: '',
-        country: ''
+        name: '', email: '', phone: '', street: '', city: '', postalCode: '', country: ''
+    });
+
+    const [cardDetails, setCardDetails] = useState({
+        cardName: '', cardNumber: '', cvv: '', expiryDate: ''
     });
 
     const [paymentMethod, setPaymentMethod] = useState('');
@@ -36,10 +27,7 @@ const Checkout = () => {
 
     const handleAddressChange = (e) => {
         const { name, value } = e.target;
-        setAddress((prevAddress) => ({
-            ...prevAddress,
-            [name]: value
-        }));
+        setAddress(prev => ({ ...prev, [name]: value }));
     };
 
     const handlePaymentChange = (e) => {
@@ -49,155 +37,120 @@ const Checkout = () => {
     const handleDeliveryChange = (e) => {
         const selectedMethod = e.target.value;
         setDeliveryMethod(selectedMethod);
+        setShippingCost(selectedMethod === 'standard' ? 5.99 : selectedMethod === 'express' ? 12.99 : 0);
+    };
 
-        // Update shipping cost dynamically
-        if (selectedMethod === 'standard') {
-            setShippingCost(5.99);
-        } else if (selectedMethod === 'express') {
-            setShippingCost(12.99);
-        } else {
-            setShippingCost(0);
-        }
+    const handleCardDetailsChange = (e) => {
+        const { name, value } = e.target;
+        setCardDetails(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!deliveryMethod) return; // Prevent submission if no delivery method is selected
+        if (!deliveryMethod) return;
 
-        console.log('Submitting Order:', {
-            address,
-            paymentMethod,
-            deliveryMethod,
-            cartItems,
-            totalItemsPrice,
-            shippingCost,
-            overallTotal
-        });
-        // Show order confirmation
+        console.log('Submitting Order:', { address, paymentMethod, deliveryMethod, cartItems, totalItemsPrice, shippingCost, overallTotal });
         setOrderPlaced(true);
-
-        // Clear form after submission
-        setTimeout(() => {
-            setOrderPlaced(false);
-        }, 3000); // Hide confirmation after 3 seconds
+        setTimeout(() => setOrderPlaced(false), 3000);
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', padding: '50px', maxWidth: '900px', margin: 'auto' }}>
+        <div className="flex flex-col lg:flex-row justify-between items-start px-4 md:px-16 lg:px-32 py-12 mx-auto">
             
             {orderPlaced && (
-                <div style={{
-                    position: 'fixed',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    background: 'linear-gradient(135deg, #ff758c, #ff7eb3)',
-                    color: 'white',
-                    padding: '40px 60px',
-                    borderRadius: '20px',
-                    fontSize: '28px',
-                    fontWeight: 'bold',
-                    width: '400px',
-                    height: '350px', 
-                    zIndex: 1000,
-                    textAlign: 'center',
-                    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)',
-                    width: '400px'
-                }}>
-                     Hurray! Your order was placed successfully!
-                     <img src={PlacedOrd} alt="PlacedOrd" style={{ width: '100%', borderRadius: '10px', marginTop: '-100px'}} />
+                <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-pink-500 to-pink-400 text-white p-10 rounded-xl text-center shadow-lg z-50 w-80 h-80">
+                    <p className="text-xl font-bold text-white">Hurray! Your order was placed successfully!</p>
+                    <img src={PlacedOrd} alt="Placed Order" className="w-full rounded-lg" />
                 </div>
-                
             )}
 
+            {/* Checkout Form */}
+            <div className="checkout-container w-full lg:w-1/2 mt-[50px]">
+                <h2 className="text-2xl font-light mb-6">Checkout</h2>
 
-            {/* Left Container - Checkout Form */}
-            <div className="checkout-container" style={{ padding: '200px', marginTop: '-50px', marginLeft: '-520px' }}>
-                <h2 style={{ fontSize: '30px', fontWeight: '300' }}>Checkout</h2>
-
-                <form onSubmit={handleSubmit}>
-                    {/* Shipping Address Section */}
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    {/* Shipping Address */}
                     <section>
-                        <h3 style={{ marginTop: '20px' }}>Shipping Address</h3>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '400px' }}>
-                            <input type="text" name="name" placeholder="Full Name" value={address.name} onChange={handleAddressChange} required style={{ background: '#fcd7dd', padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }} />
-                            <input type="email" name="email" placeholder="Email" value={address.email} onChange={handleAddressChange} required style={{ background: '#fcd7dd', padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }} />
-                            <input type="tel" name="phone" placeholder="Phone Number" value={address.phone} onChange={handleAddressChange} required style={{ background: '#fcd7dd', padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }} />
-                            <input type="text" name="street" placeholder="Street Address" value={address.street} onChange={handleAddressChange} required style={{ background: '#fcd7dd', padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }} />
-                            <input type="text" name="city" placeholder="City" value={address.city} onChange={handleAddressChange} required style={{ background: '#fcd7dd', padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }} />
-                            <input type="text" name="postalCode" placeholder="Postal Code" value={address.postalCode} onChange={handleAddressChange} required style={{ background: '#fcd7dd', padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }} />
-                            <input type="text" name="country" placeholder="Country" value={address.country} onChange={handleAddressChange} required style={{ background: '#fcd7dd', padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }} />
+                        <h3 className="text-lg font-medium mb-2">Shipping Address</h3>
+                        <div className="grid grid-cols-1 gap-3">
+                            {Object.keys(address).map((key) => (
+                                <input
+                                    key={key}
+                                    type={key === "email" ? "email" : key === "phone" ? "tel" : "text"}
+                                    name={key}
+                                    placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+                                    value={address[key]}
+                                    onChange={handleAddressChange}
+                                    required
+                                    className="w-full bg-pink-100 p-2 rounded border border-gray-300"
+                                />
+                            ))}
                         </div>
                     </section>
 
-                    {/* Payment Method Section */}
+                    {/* Payment Method */}
                     <section>
-                        <h3 style={{ marginTop: '10px' }}>Payment Method</h3>
-                        <div>
-                            <label style={{ marginRight: '10px', color: '#52527a' }}>
+                        <h3 className="text-lg font-medium mb-2">Payment Method</h3>
+                        <div className="flex gap-4">
+                            <label className="text-gray-700">
                                 <input type="radio" value="creditCard" checked={paymentMethod === 'creditCard'} onChange={handlePaymentChange} />
                                 Credit Card
                             </label>
-                            <label style={{ marginRight: '10px', color: '#52527a' }}>
+                            <label className="text-gray-700">
                                 <input type="radio" value="paypal" checked={paymentMethod === 'paypal'} onChange={handlePaymentChange} />
-                                Cash on Deliver
+                                Cash on Delivery
                             </label>
                         </div>
                     </section>
 
-                    {/* Delivery Method Section */}
+                    {/* Card Details */}
+                    {paymentMethod === 'creditCard' && (
+                        <section>
+                            <h3 className="text-lg font-medium mb-2">Credit Card Details</h3>
+                            <div className="grid grid-cols-1 gap-3">
+                                {Object.keys(cardDetails).map((key) => (
+                                    <input
+                                        key={key}
+                                        type={key === 'expiryDate' ? 'date' : key === 'cvv' || key === 'cardNumber' ? 'number' : 'text'}
+                                        name={key}
+                                        placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+                                        value={cardDetails[key]}
+                                        onChange={handleCardDetailsChange}
+                                        required
+                                        className="w-full bg-pink-100 p-2 rounded border border-gray-300"
+                                    />
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+
+                    {/* Delivery Method */}
                     <section>
-                        <h3 style={{ marginTop: '10px' }}>Delivery Method</h3>
-                        <div>
-                            <label style={{ marginRight: '10px', color: '#52527a' }}>
+                        <h3 className="text-lg font-medium mb-2">Delivery Method</h3>
+                        <div className="flex gap-4">
+                            <label className="text-gray-700">
                                 <input type="radio" value="standard" checked={deliveryMethod === 'standard'} onChange={handleDeliveryChange} />
-                                Standard Delivery (3-5 days) - $5.99
+                                Standard (3-5 days) - $5.99
                             </label>
-                            <label style={{ marginRight: '10px', color: '#52527a' }}>
+                            <label className="text-gray-700">
                                 <input type="radio" value="express" checked={deliveryMethod === 'express'} onChange={handleDeliveryChange} />
-                                Express Delivery (1-2 days) - $12.99
+                                Express (1-2 days) - $12.99
                             </label>
                         </div>
                     </section>
 
-                    {/* Order Summary with Shipping Cost */}
+                    {/* Order Summary */}
                     <section>
-                        <h3 style={{ marginTop: '10px' }}>Order Summary</h3>
-                        <div style={{ border: '1px solid #ddd', padding: '10px', borderRadius: '5px', background: '#fcd7dd', width:'100%' }}>
+                        <h3 className="text-lg font-medium mb-2">Order Summary</h3>
+                        <div className="bg-pink-100 p-4 rounded border border-gray-300">
                             {cartItems.length > 0 ? (
-                                <ul style={{ listStyleType: 'none', padding: 0 }}>
+                                <ul className="list-none p-0">
                                     {cartItems.map((item) => (
-                                        <li key={item.id} style={{ 
-                                            display: 'flex', 
-                                            alignItems: 'center', 
-                                            padding: '10px 0', 
-                                            borderBottom: '1px solid #ddd' 
-                                        }}>
-                                            <img 
-                                                src={item.image} 
-                                                alt={item.name} 
-                                                style={{ 
-                                                    width: '50px', 
-                                                    height: '50px', 
-                                                    objectFit: 'cover', 
-                                                    marginRight: '10px', 
-                                                    borderRadius: '5px' 
-                                                }} 
-                                            />
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                                                <p style={{ margin: '0', fontSize: '14px', fontWeight: '500', flex: 1 }}>
-                                                    {item.name}
-                                                </p>
-                                                
-                                                <p style={{ 
-                                                    margin: '0', 
-                                                    fontSize: '14px', 
-                                                    color: '#333', 
-                                                    whiteSpace: 'nowrap' 
-                                                }}>
-                                                    ${parseFloat(item.new_price.slice(1)) * item.quantity} ({item.quantity})
-                                                </p>
-                                            </div>
+                                        <li key={item.id} className="flex justify-between items-center border-b py-2">
+                                            <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
+                                            <p className="text-sm font-medium">{item.name}</p>
+                                            <p className="text-sm">${(parseFloat(item.new_price.slice(1)) * item.quantity).toFixed(2)} ({item.quantity})</p>
                                         </li>
                                     ))}
                                 </ul>
@@ -205,26 +158,20 @@ const Checkout = () => {
                                 <p>Your cart is empty.</p>
                             )}
                             <p>Shipping: ${shippingCost.toFixed(2)}</p>
-                            <p style={{ fontWeight: 'bold', marginTop: '10px' }}>Total: ${overallTotal.toFixed(2)}</p>
+                            <p className="font-bold mt-2">Total: ${overallTotal.toFixed(2)}</p>
                         </div>
                     </section>
 
-                    <div>
-                        <button type="submit" disabled={!deliveryMethod} style={{
-                            backgroundColor: !deliveryMethod ? '#ccc' : '#D5006D',
-                            color: '#fff',
-                            padding: '10px 20px',
-                            border: 'none',
-                            borderRadius: '5px',
-                            cursor: !deliveryMethod ? 'not-allowed' : 'pointer',
-                        }}>Place Order</button>
-                    </div>
+                    {/* Place Order Button */}
+                    <button type="submit" disabled={!deliveryMethod} className={`p-3 text-white rounded ${!deliveryMethod ? 'bg-gray-400 cursor-not-allowed' : 'bg-pink-600'}`}>
+                        Place Order
+                    </button>
                 </form>
             </div>
 
-            {/* Right Container - Image */}
-            <div style={{ flex: '0.6', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '240px', marginRight: '-520px' }}>
-                <img src={CheckOut} alt="Checkout" style={{ width: '100%', borderRadius: '10px', marginTop: '-100px', marginLeft:'-600px' }} />
+            {/* Checkout Image (below on mobile) */}
+            <div className="w-full lg:w-1/2 flex justify-center mt-8 lg:mt-0">
+                <img src={CheckOut} alt="Checkout" className="w-full max-w-md lg:max-w-xl rounded" />
             </div>
         </div>
     );

@@ -12,7 +12,7 @@ const Product = () => {
   const [category, setCategory] = useState(null);  
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const navigate = useNavigate();  
-  const { addToCart } = useCart(); // Corrected to useCart()
+  const { addToCart } = useCart(); 
 
   useEffect(() => {
     let foundProduct = null;

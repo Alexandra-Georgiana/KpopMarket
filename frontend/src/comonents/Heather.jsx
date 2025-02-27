@@ -10,6 +10,8 @@ import { useCart } from "../comonents/CartContext";
 import useSearch from "../comonents/SearchResults"; 
 import artists from "../assets/artists";
 import products from "../assets/mearch";
+import {auth} from "../firebase/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 
 const Heather = () => {
@@ -18,6 +20,7 @@ const Heather = () => {
     const [merchOpen, setMerchOpen] = useState(false);
     const [rewardOpen, setRewardOpen] = useState(false);
     const [artistOpen, setArtistOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
     const { cartItems } = useCart(); 
 
     // Sample product list (replace with real data)
@@ -63,6 +66,26 @@ const Heather = () => {
         }
     }, [menuOpened]);
 
+    //Mobile Responsive
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 900);
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const [user, setUser] = useState();
+
+    //If loged in redirect to accont page
+    useEffect(() => {
+        auth.onAuthStateChanged(user=>{
+            setUser(user);
+        })
+    })
+
+
+
     // Close the menu
     const closeMenu = () => {
         setMenuOpened(false);
@@ -81,20 +104,22 @@ const Heather = () => {
                 </div>
             </div>
 
-            {/* Search Bar */}
-            <div className="absolute left-10 transform px-4 py-2 flex justify-center mt-3">
-                <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={handleSearch}
-                    onKeyDown={handleSearchSubmit}
-                    placeholder="Search for products..."
-                    className="w-80 px-4 py-2 border border-gray-300 rounded-md text-black"
-                />
-            </div>
+            {/* Searck Bar Desktop */}
+            {!isMobile && (
+                <div className="absolute left-10 transform w-60 px-4 py-2 flex justify-center mt-4 ml-6">
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                        onKeyDown={handleSearchSubmit}
+                        placeholder="Search for products..."
+                        className="w-80 px-4 py-2 border border-gray-300 rounded-md text-black"
+                    />
+                </div>
+            )}
 
             {/* Conditional Rendering of Search Results */}
-            {searchQuery && (
+            {!isMobile && searchQuery && (
                 <div className="absolute bg-[#ea6397e3] rounded-xl left-10 top-32 transform px-4 py-20 -mt-16 w-80">
                     {filteredProducts.length === 0 && filteredArtists.length === 0 ? (
                         <p className="text-white font-bold">No results found for "{searchQuery}"</p>
@@ -122,7 +147,7 @@ const Heather = () => {
                         <FaOpencart className="p-1 h-8 w-8" />
                         <span className="absolute -top-2 -right-2 flexCenter w-5 h-5 rounded-full bg-[#23071643] text-white text-xs">{totalQuantity}</span>
                     </NavLink>
-                    <NavLink to={"signup"} className="flex hover:text-[#220772]">
+                    <NavLink to={"/signup"} className="flex hover:text-[#220772]">
                         <FaUser className="h-6 w-6" />
                     </NavLink>
                 </div>
@@ -148,6 +173,35 @@ const Heather = () => {
                         <MdClose />
                     </button>
                 </div>
+
+                {isMobile && (
+                    <div className="mb-4">
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={handleSearch}
+                            onKeyDown={handleSearchSubmit}
+                            placeholder="Search for products..."
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md text-black"
+                        />
+                        {searchQuery && (
+                            <div className="bg-[#ea6397e3] rounded-xl px-4 py-2 mt-2">
+                                {filteredProducts.length === 0 && filteredArtists.length === 0 ? (
+                                    <p className="text-white font-bold">No results found for "{searchQuery}"</p>
+                                ) : (
+                                    <ul className="text-white">
+                                        {filteredProducts.map((product, index) => (
+                                            <li key={`product-${index}`}>{product}</li>
+                                        ))}
+                                        {filteredArtists.map((artist, index) => (
+                                            <li key={`artist-${index}`}>{artist.name}</li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                )}
                 
                 <nav className="flex flex-col gap-y-4 text-[#ea6397]">
                     <NavLink to={'/'} className="font-bold">Home</NavLink>
@@ -156,13 +210,13 @@ const Heather = () => {
                     <div>
                         <button onClick={toggleAlbums} className="flex justify-between w-full font-bold">ALBUMS {albumsOpen ? <AiOutlineMinus /> : <AiOutlinePlus />}</button>
                         {albumsOpen && (
-                            <div className="ml-4 flex flex-col gap-y-2 text-[#ec8ad1]">
+                            <nav className="ml-4 flex flex-col gap-y-2 text-[#ec8ad1]" onClick={toggleMenu}>
                                 <NavLink to={'/alb/boygroups'} className={"hover:text-[#ee22c5ee]"}>Boygroups</NavLink>
                                 <NavLink to={'/alb/girlgroups'} className={"hover:text-[#ee22c5ee]"}>Girlgroups</NavLink>
                                 <NavLink to={'/alb/ost'} className={"hover:text-[#ee22c5ee]"}>O.S.T</NavLink>
                                 <NavLink to={'/alb/solo'} className={"hover:text-[#ee22c5ee]"}>Solo Artists</NavLink>
                                 <NavLink to={'/alb/all'} className={"hover:text-[#ee22c5ee]"}>All Albums</NavLink>
-                            </div>
+                            </nav>
                         )}
                     </div>
 
@@ -170,14 +224,14 @@ const Heather = () => {
                     <div>
                         <button onClick={toggleMerch} className="flex justify-between w-full font-bold">MERCHANDISE {merchOpen ? <AiOutlineMinus /> : <AiOutlinePlus />}</button>
                         {merchOpen && (
-                            <div className="ml-4 flex flex-col gap-y-2 text-[#ec8ad1]">
+                            <nav className="ml-4 flex flex-col gap-y-2 text-[#ec8ad1]" onClick={toggleMenu}>
                                 <NavLink to={'/mrch/totebags'} className={"hover:text-[#ee22c5ee]"}>Tote Bags</NavLink>
                                 <NavLink to={'/mrch/stickers'} className={"hover:text-[#ee22c5ee]"}>Stickers</NavLink>
                                 <NavLink to={'/mrch/prints'} className={"hover:text-[#ee22c5ee]"}>Prints</NavLink>
                                 <NavLink to={'/mrch/keychains'} className={"hover:text-[#ee22c5ee]"}>Keychains</NavLink>
                                 <NavLink to={'/mrch/below10'} className={"hover:text-[#ee22c5ee]"}>Below 10€</NavLink>
                                 <NavLink to={'/mrch/all'} className={"hover:text-[#ee22c5ee]"}>All Merchandise</NavLink>
-                            </div>
+                            </nav>
                         )}
                     </div>
 
@@ -194,7 +248,7 @@ const Heather = () => {
                             </div>
                         )}
                     </div>
-                    <NavLink to={'/sale-pg'} className="font-bold">SALE</NavLink>
+                    <NavLink to={'/sale-pg'} className="font-bold" onClick={toggleMenu}>SALE</NavLink>
 
                     {/* Rewards Section beside the menu */}
                     <div className="relative">

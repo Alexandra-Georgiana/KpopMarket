@@ -14,13 +14,15 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div style={{marginTop: '80px'}}>
+
       <SlideShow scrollToNewThisWeek={scrollToNewThisWeek} />
       <Popular />
       <section ref={newThisWeekRef} className="py-10 flex flex-col items-center justify-center">
         <Latest />
       </section>
       <Sale />
+
     </div>
   );
 };

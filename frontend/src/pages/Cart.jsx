@@ -15,8 +15,8 @@ const Cart = () => {
   }, 0);
 
   return (
-    <div className="cart-page-container" style={{ padding: '200px', marginTop: '80px' }}>
-      <h2 className="title" style={{ marginTop: '-150px', fontSize: '40px', fontWeight: '300' }}>Your Cart</h2>
+    <div className="cart-page-container" style={{ padding: '50px', marginTop: '80px' }}>
+      <h2 className="title" style={{ marginTop: '10px', fontSize: '40px', fontWeight: '300' }}>Your Cart</h2>
       
       {cartItems.length === 0 ? (
         <div style={{ display: 'flex', alignItems: 'center', marginTop: '100px' }}>
@@ -36,7 +36,7 @@ const Cart = () => {
           />
         </div>
       ) : (
-        <div className="cartItems" style={{ marginTop: '50px' }}>
+        <div className="cartItems" style={{ marginTop: '50px', width: '100%' }}>
           {cartItems.map(item => (
             <div
               key={item.id}

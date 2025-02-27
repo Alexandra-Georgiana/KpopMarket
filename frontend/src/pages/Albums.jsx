@@ -53,7 +53,7 @@ const Albums = () => {
     <div className="pt-20 px-4 flex">
       {/* Show Filter & Sort only if there are albums in the category */}
       {isCategoryFound && filteredAlbums.length > 0 && (
-        <div className="w-1/4 p-4 bg-pink-100 rounded-lg shadow-md">
+        <div className="w-[230px] p-4 bg-pink-100 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4">Filter & Sort</h2>
 
           {/* Price Range */}
