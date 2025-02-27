@@ -18,7 +18,7 @@ const Home = () => {
 
       <SlideShow scrollToNewThisWeek={scrollToNewThisWeek} />
       <Popular />
-      <section ref={newThisWeekRef} className="py-10 flex flex-col items-center justify-center">
+      <section ref={newThisWeekRef} className="py-10 ">
         <Latest />
       </section>
       <Sale />
