@@ -56,6 +56,7 @@ export const POPULAR = [
   },
 ];
 
+
 // **LATEST PRODUCTS**
 export const LATEST = [
   {
@@ -80,6 +81,7 @@ export const LATEST = [
     old_price: 100.5,
   },
 ];
+export default POPULAR;
 
 // **FOOTER LINKS**
 export const FOOTER_LINKS = [
@@ -125,3 +127,19 @@ export const SOCIALS = {
     { url: "https://www.linkedin.com", icon: linkedin },
   ],
 };
+
+export const ALL = {
+  POPULAR,
+  LATEST,
+  FOOTER_LINKS,
+  FOOTER_CONTACT_INFO,
+  SOCIALS,
+}
+
+export const MENU_ITEMS = [
+  "Albums", "Boygroups", "Girlgroups", "O.S.T", "Solo Artists",
+  "All Albums", "Merchandise", "Tote Bags", "Stickers", "Prints",
+  "Keychains", "Below 10€", "All Merchandise", "Artists", "Sale", "Rewards"
+];
+
+

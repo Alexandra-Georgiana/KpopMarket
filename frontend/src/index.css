@@ -67,7 +67,7 @@
   }
 
   .btn_dark_rounded { 
-    @apply  medium-15 border border-green-90 bg-green-90 px-7 py-3 text-white transition-all hover:bg-black rounded-full
+    @apply  medium-15 border border-[#ec4899] bg-[#ec4899] px-7 py-3 text-white transition-all hover:bg-[#ec4899] rounded-full
   }
   .btn_dark_outline { 
     @apply  medium-15 border border-green-90 bg-transparent px-7 py-3 text-green-90 transition-all hover:bg-black hover:text-white rounded-full
@@ -239,6 +239,11 @@
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
   }
+
+  .pointer-events-auto {
+    pointer-events: auto;
+  }
+  
 
 
 }

@@ -1,7 +1,21 @@
 import { useState } from "react";
 import Img from "../assets/Mimisky's.png";
+import {NavLink} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-const Rewards = () => {
+
+const Rewards = ({closeMenu}) => {
+
+    const navigate = useNavigate();
+
+    const handleClose = () => {
+        closeMenu();
+    }
+    const handleNavigation = ()=>{
+        closeMenu();
+        navigate('/signup');
+    }
+
     return (
         <div className="bg-gradient-to-b from-pink-300 to-white p-4 rounded-xl shadow-md w-full max-w-sm overflow-hidden hide-scrollbar">
             <div className="text-center">
@@ -17,11 +31,12 @@ const Rewards = () => {
                     Participate in our loyalty program to win rewards for every order you place in our shop 
                     or refer friends to receive vouchers and help us grow the K-Pop Community! :)
                 </p>
-                <button className="mt-4 w-full bg-pink-500 text-white py-2 rounded-lg font-bold">
+                <button className="mt-4 w-full bg-pink-500 text-white py-2 rounded-lg font-bold" 
+                    onClick={handleNavigation}>
                     Start Collecting
                 </button>
-                <p className="text-sm text-center mt-2">
-                    Already have an account? <span className="text-pink-500 cursor-pointer">Sign in</span>
+                <p className="text-sm text-center mt-2 pointer-events-auto">
+                    Already have an account?{" "} <NavLink to="/login" className="relative z-50 text-pink-500 hover:underline cursor-pointer " onClick={handleClose} >Log in</NavLink>
                 </p>
             </div>
 

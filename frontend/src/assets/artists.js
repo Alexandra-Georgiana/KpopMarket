@@ -180,7 +180,7 @@ const artists = [
     name: "TXT",
     products: [
         {
-            id: 18,
+            id: 19,
             name: "totebag_5",
             new_price: "$15.00",
             old_price: "$20.00",
@@ -193,7 +193,7 @@ const artists = [
     name: "Dpr Ian",
     products: [
       {
-        id: 18,
+        id: 20,
         name: "totebag_4",
         new_price: "$15.00",
         old_price: "$20.00",
@@ -205,7 +205,7 @@ const artists = [
     name: "G-idle",
     products: [
       {
-        id: 19,
+        id: 21,
         name: "totebag_3",
         new_price: "$15.00",
         old_price: "$20.00",

@@ -1,6 +1,7 @@
 import SlideShow from "../comonents/SlideShow";
 import Popular from "../comonents/Popular";
 import Latest from "../comonents/Latest";
+import Sale from "../comonents/Sale";
 import React, { useRef } from "react";
 
 const Home = () => {
@@ -19,6 +20,7 @@ const Home = () => {
       <section ref={newThisWeekRef} className="py-10 flex flex-col items-center justify-center">
         <Latest />
       </section>
+      <Sale />
     </div>
   );
 };

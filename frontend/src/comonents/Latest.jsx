@@ -1,6 +1,7 @@
 import React from 'react'
-import LATEST from '../assets/latest'
+import LATEST from '../assets/data'
 import Item from './Item'
+import { NavLink } from "react-router-dom"
 
 const Latest = () => {
   return (
@@ -15,6 +16,14 @@ const Latest = () => {
                     </div>                
                 ))}
             </div>
+        </div>
+
+        <div className="flex flex-col items-center mt-6">
+            <NavLink to="/late-pg">
+                <button className="bg-[#ea589c] text-white px-4 py-2 rounded-md mt-4">
+                    View All
+                </button>
+            </NavLink>
         </div>
     </section>
   )

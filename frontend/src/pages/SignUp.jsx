@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";	
+import { Link, NavLink } from "react-router-dom";
 
-const Login = () => {
+const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [isInteracted, setIsInteracted] = useState(false); // Tracks if user clicked on inputs
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
 
   const validatePassword = (value) => {
     setPassword(value);
@@ -19,17 +21,35 @@ const Login = () => {
     }
   };
 
+  const validateConfirmPassword = (value) => {
+    setConfirmPassword(value);
+    if (value !== password) {
+      setConfirmPasswordError("Passwords do not match.");
+    } else {
+      setConfirmPasswordError("");
+    }
+  };
+
+  const isFormValid =
+    username.trim() !== "" &&
+    email.trim() !== "" &&
+    password.trim() !== "" &&
+    confirmPassword.trim() !== "" &&
+    passwordError === "" &&
+    confirmPasswordError === "" &&
+    isChecked;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!passwordError) {
+    if (isFormValid) {
       alert("Form submitted successfully!");
     }
   };
 
   return (
-    <section className="max_padd_container flexCenter flex-col pt-32">
+    <section className="max_pad_container flexCenter flex-col pt-32">
       <form onSubmit={handleSubmit} className="flex flex-col m-auto px-14 py-10 bg-[#ffffff77] justify-center items-center max-w-[555px] h-[600px] rounded-xl">
-        <h3 className="text-2xl font-bold mb-4">Log In</h3>
+        <h3 className="text-2xl font-bold mb-4">Sign Up</h3>
         <div className="flex flex-col gap-4 mt-7">
           <input
             type="text"
@@ -37,7 +57,6 @@ const Login = () => {
             className="h-14 w-full pl-5 bg-slate-900/5 outline-none rounded-xl cursor-text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            onClick={() => setIsInteracted(true)} // Detects user interaction
           />
           <input
             type="email"
@@ -45,7 +64,6 @@ const Login = () => {
             className="h-14 w-full pl-5 bg-slate-900/5 outline-none rounded-xl cursor-text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            onClick={() => setIsInteracted(true)}
           />
           <input
             type="password"
@@ -53,30 +71,46 @@ const Login = () => {
             className="h-14 w-full pl-5 bg-slate-900/5 outline-none rounded-xl cursor-text"
             value={password}
             onChange={(e) => validatePassword(e.target.value)}
-            onClick={() => setIsInteracted(true)}
           />
           {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
+
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            className="h-14 w-full pl-5 bg-slate-900/5 outline-none rounded-xl cursor-text"
+            value={confirmPassword}
+            onChange={(e) => validateConfirmPassword(e.target.value)}
+          />
+          {confirmPasswordError && <p className="text-red-500 text-sm">{confirmPasswordError}</p>}
+
+          <div className="flex items-center mt-6 gap-3">
+            <input type="checkbox" id="terms" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
+            <label htmlFor="terms" className="ml-2">
+              By continuing, I agree with the terms and conditions
+            </label>
+          </div>
 
           <button
             type="submit"
             className={`my-4 bg-pink-500 text-white py-2 px-4 rounded-xl transition ${
-              isInteracted ? "hover:bg-pink-600" : "opacity-50 cursor-not-allowed"
+              isFormValid ? "hover:bg-pink-600" : "opacity-50 cursor-not-allowed"
             }`}
-            disabled={!isInteracted} // Button disabled until user clicks any input
+            disabled={!isFormValid}
           >
-            Log In
+            Sign Up
           </button>
 
-          <p className="text-black font-bold">
-            Don't have an account?{" "}
-            <NavLink to="/signup" className="relative text-blue-500 hover:underline inline-block">
-              Sign Up
+          <p className="text-black font-bold relative z-50 pointer-events-auto">
+            Already have an account?{" "}
+            <NavLink to="/login" className="relative text-blue-500 hover:underline inline-block">
+              Log In
             </NavLink>
           </p>
+
         </div>
       </form>
     </section>
   );
 };
 
-export default Login;
+export default Signup;

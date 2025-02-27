@@ -231,4 +231,8 @@ const populateCollections = () => {
 // Call the function to populate 'below10' and 'all'
 populateCollections();
 
+// Export the SALE and ALL collections
+export const SALE = mearch.all.filter(item => "old_price" in item);
+export const ALL = mearch.all;
+
 export default mearch;

@@ -48,30 +48,32 @@ const Mearch = () => {
     <div className="pt-20 px-4 flex">
       {isCategoryFound && filteredMearch.length > 0 && (
         <div className="w-1/4 p-4 bg-pink-100 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Filter & Sort</h2>
+          <div className = "fixed">
+            <h2 className="text-xl font-semibold mb-4">Filter & Sort</h2>
 
-          {/* Price Range */}
-          <label className="block font-medium">Price Range</label>
-          <input 
-            type="range" 
-            min="0" 
-            max="100" 
-            value={maxPrice} 
-            onChange={(e) => setMaxPrice(e.target.value)} 
-            className="w-full mt-1"
-          />
-          <p>Price: $0 - ${maxPrice}</p>
+            {/* Price Range */}
+            <label className="block font-medium">Price Range</label>
+            <input 
+              type="range" 
+              min="0" 
+              max="100" 
+              value={maxPrice} 
+              onChange={(e) => setMaxPrice(e.target.value)} 
+              className="w-full mt-1"
+            />
+            <p>Price: $0 - ${maxPrice}</p>
 
-          {/* Sorting Options */}
-          <div className="mt-4">
-            <label className="block font-medium">Sort By</label>
-            <div className="flex flex-col mt-2">
-              <label><input type="radio" name="sort" value="nameAsc" checked={sortBy === "nameAsc"} onChange={() => setSortBy("nameAsc")} /> Alphabetical (A-Z)</label>
-              <label><input type="radio" name="sort" value="nameDesc" checked={sortBy === "nameDesc"} onChange={() => setSortBy("nameDesc")} /> Alphabetical (Z-A)</label>
-              <label><input type="radio" name="sort" value="priceLowHigh" checked={sortBy === "priceLowHigh"} onChange={() => setSortBy("priceLowHigh")} /> Price (Low to High)</label>
-              <label><input type="radio" name="sort" value="priceHighLow" checked={sortBy === "priceHighLow"} onChange={() => setSortBy("priceHighLow")} /> Price (High to Low)</label>
+            {/* Sorting Options */}
+            <div className="mt-4">
+              <label className="block font-medium">Sort By</label>
+              <div className="flex flex-col mt-2">
+                <label><input type="radio" name="sort" value="nameAsc" checked={sortBy === "nameAsc"} onChange={() => setSortBy("nameAsc")} /> Alphabetical (A-Z)</label>
+                <label><input type="radio" name="sort" value="nameDesc" checked={sortBy === "nameDesc"} onChange={() => setSortBy("nameDesc")} /> Alphabetical (Z-A)</label>
+                <label><input type="radio" name="sort" value="priceLowHigh" checked={sortBy === "priceLowHigh"} onChange={() => setSortBy("priceLowHigh")} /> Price (Low to High)</label>
+                <label><input type="radio" name="sort" value="priceHighLow" checked={sortBy === "priceHighLow"} onChange={() => setSortBy("priceHighLow")} /> Price (High to Low)</label>
+              </div>
             </div>
-          </div>
+          </div>  
         </div>
       )}
 

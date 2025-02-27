@@ -2,15 +2,22 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Heather from "./comonents/Heather";
 import Home from "./pages/Home";
-import Category from "./pages/Category";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
-import LogIn from "./pages/Login";
+import Signup from "./pages/SignUp";
+import Login from "./pages/Login"; 
 import Footer from "./comonents/Footer";
 import ArtistProducts from "./pages/ArtistProduct";
 import Album from "./pages/Albums";
 import Mearch from "./pages/Mearch";
 import Love from "./assets/Love.png";
+import Sale from "./pages/SalePg";
+import Latest from "./pages/LatestPg";
+import Trending from "./pages/PopularPg";
+import SearchResults from "./comonents/SearchResults";
+import NotFound from "./pages/NotFound";
+import Checkout from "./pages/Checkout";
+
 
 export default function App() {
   const [showSticker, setShowSticker] = useState(false);
@@ -47,16 +54,16 @@ export default function App() {
           <Route path="/artist/:artistName" element={<ArtistProducts />} />
           <Route path="/alb/:category" element={<Album />} />
           <Route path="/mrch/:category" element={<Mearch />} />
-          <Route path="/alb" element={<Category />} />
-          <Route path="/mrch" element={<Category />} />
-          <Route path="/art" element={<Category />} />
-          <Route path="/sale" element={<Category />} />
-          <Route path="/cstm" element={<Category />} />
-          <Route path="/rwd" element={<Category />} />
-          <Route path="/product" element={<Product />} />
-          <Route path=":producId" element={<Product />} />
+          <Route path="/sale-pg" element={<Sale />} />
+          <Route path = "/late-pg" element = {<Latest />} />
+          <Route path = "/pop-pg" element = {<Trending />} />
+          <Route path="/search" element={<SearchResults />} />
+          <Route path="/product/:id" element={<Product />} />
           <Route path="/cart-pg" element={<Cart />} />
-          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/not_found" element={<NotFound />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
         <Footer />
       </BrowserRouter>

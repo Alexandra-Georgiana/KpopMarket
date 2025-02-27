@@ -1,6 +1,7 @@
-import { POPULAR } from "../assets/popular"
+import { POPULAR } from "../assets/data"
 import Item from "./Item"
 import React from 'react'
+import { NavLink } from "react-router-dom"
 
 const Popular = () => {
   return (
@@ -16,8 +17,17 @@ const Popular = () => {
                 ))}
             </div>
         </div>
+
+        <div className="flex flex-col items-center mt-6">
+            <NavLink to="/pop-pg">
+                <button className="bg-[#ea589c] text-white px-4 py-2 rounded-md mt-4">
+                    View All
+                </button>
+            </NavLink>
+        </div>
     </section>
   )
 }
 
 export default Popular
+
