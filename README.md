@@ -28,7 +28,25 @@ This project is a **K-Pop merchandise and album e-commerce platform** built with
 ---
 
 ## 📁 Project Structure  
-`frontend/ ├── .gitignore ├── eslint.config.js ├── index.html ├── package.json ├── postcss.config.js ├── public/ ├── README.md ├── src/ │ ├── App.css │ ├── App.jsx │ ├── assets/ │ ├── components/ │ ├── firebase/ │ ├── index.css │ ├── main.jsx │ ├── pages/ ├── tailwind.config.js └── vite.config.js
+`frontend/</br> 
+├── .gitignore</br>
+├── eslint.config.js</br> 
+├── index.html </br>
+├── package.json </br>
+├── postcss.config.js </br>
+├── public/ </br>
+├── README.md </br>
+├── src/ </br>
+│ ├── App.css </br>
+│ ├── App.jsx </br>
+│ ├── assets/ </br>
+│ ├── components/ </br>
+│ ├── firebase/ </br>
+│ ├── index.css </br> 
+│ ├── main.jsx </br>
+│ ├── pages/ </br>
+├── tailwind.config.js </br>
+└── vite.config.js </br>
 
 ## 🚀 Usage
 Browse Products: View a list of albums, merchandise, and collectibles</br>
@@ -43,5 +61,6 @@ Firebase (Authentication & Database)</br>
 Tailwind CSS</br>
 
 ## This project focuses on design, and the subject was chosen based on my design concepts. Therefore, it does not reflect my personal interests.
+## Some of the images used for products are my own creations. Others were sourced from Instagram and Pinterest, and their respective creators retain all rights.
 
 
