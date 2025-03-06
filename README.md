@@ -4,18 +4,6 @@ This project is a **K-Pop merchandise and album e-commerce platform** built with
 
 ---
 
-## 📌 Table of Contents  
-
-- [Features](#features)  
-- [Project Structure](#project-structure)  
-- [Installation](#installation)  
-- [Usage](#usage)  
-- [Scripts](#scripts)  
-- [Dependencies](#dependencies)  
-- [Dev Dependencies](#dev-dependencies)  
-
----
-
 ## ✨ Features  
 
 ✅ **Browse & Search** for K-Pop merchandise and albums  
